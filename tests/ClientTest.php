@@ -72,7 +72,18 @@ class ClientTest extends \PHPUnit\Framework\TestCase
             ['max_fee' => 4000000]
         );
 
+        $firstRequest = $container[0];
+        $secondRequest = $container[1];
+
+        $method = $firstRequest['request']->getMethod();
+        $crudPath = $firstRequest['request']->getUri()->getPath();
+
+        $txPath = $secondRequest['request']->getUri()->getPath();
+
         $this->assertEquals(\count($container), 2);
+        $this->assertEquals($method, 'POST');
+        $this->assertEquals($crudPath, '/crud/create');
+        $this->assertEquals($txPath, '/txs');
     }
 
     public function testUpdate()
@@ -98,7 +109,18 @@ class ClientTest extends \PHPUnit\Framework\TestCase
             ['max_fee' => 4000000]
         );
 
+        $firstRequest = $container[0];
+        $secondRequest = $container[1];
+
+        $method = $firstRequest['request']->getMethod();
+        $crudPath = $firstRequest['request']->getUri()->getPath();
+
+        $txPath = $secondRequest['request']->getUri()->getPath();
+
         $this->assertEquals(\count($container), 2);
+        $this->assertEquals($method, 'POST');
+        $this->assertEquals($crudPath, '/crud/update');
+        $this->assertEquals($txPath, '/txs');
     }
 
     public function testRead()
@@ -164,7 +186,18 @@ class ClientTest extends \PHPUnit\Framework\TestCase
             ['max_fee' => 4000000]
         );
 
+        $firstRequest = $container[0];
+        $secondRequest = $container[1];
+
+        $method = $firstRequest['request']->getMethod();
+        $crudPath = $firstRequest['request']->getUri()->getPath();
+
+        $txPath = $secondRequest['request']->getUri()->getPath();
+
         $this->assertEquals(\count($container), 2);
+        $this->assertEquals($method, 'DELETE');
+        $this->assertEquals($crudPath, '/crud/delete');
+        $this->assertEquals($txPath, '/txs');
     }
 
     public function testHas()
@@ -276,7 +309,18 @@ class ClientTest extends \PHPUnit\Framework\TestCase
             ['max_fee' => 4000000]
         );
 
+        $firstRequest = $container[0];
+        $secondRequest = $container[1];
+
+        $method = $firstRequest['request']->getMethod();
+        $crudPath = $firstRequest['request']->getUri()->getPath();
+
+        $txPath = $secondRequest['request']->getUri()->getPath();
+
         $this->assertEquals(\count($container), 2);
+        $this->assertEquals($method, 'POST');
+        $this->assertEquals($crudPath, '/crud/rename');
+        $this->assertEquals($txPath, '/txs');
     }
 
     public function testCount()
@@ -342,7 +386,18 @@ class ClientTest extends \PHPUnit\Framework\TestCase
             ['max_fee' => 4000000]
         );
 
+        $firstRequest = $container[0];
+        $secondRequest = $container[1];
+
+        $method = $firstRequest['request']->getMethod();
+        $crudPath = $firstRequest['request']->getUri()->getPath();
+
+        $txPath = $secondRequest['request']->getUri()->getPath();
+
         $this->assertEquals(\count($container), 2);
+        $this->assertEquals($method, 'DELETE');
+        $this->assertEquals($crudPath, '/crud/deleteall');
+        $this->assertEquals($txPath, '/txs');
     }
 
     public function testKeyValues()
@@ -423,7 +478,18 @@ class ClientTest extends \PHPUnit\Framework\TestCase
             ['max_fee' => 4000000]
         );
 
+        $firstRequest = $container[0];
+        $secondRequest = $container[1];
+
+        $method = $firstRequest['request']->getMethod();
+        $crudPath = $firstRequest['request']->getUri()->getPath();
+
+        $txPath = $secondRequest['request']->getUri()->getPath();
+
         $this->assertEquals(\count($container), 2);
+        $this->assertEquals($method, 'POST');
+        $this->assertEquals($crudPath, '/crud/multiupdate');
+        $this->assertEquals($txPath, '/txs');
     }
 
     public function testGetLease()
@@ -492,7 +558,18 @@ class ClientTest extends \PHPUnit\Framework\TestCase
             ['max_fee' => 4000000]
         );
 
+        $firstRequest = $container[0];
+        $secondRequest = $container[1];
+
+        $method = $firstRequest['request']->getMethod();
+        $crudPath = $firstRequest['request']->getUri()->getPath();
+
+        $txPath = $secondRequest['request']->getUri()->getPath();
+
         $this->assertEquals(\count($container), 2);
+        $this->assertEquals($method, 'POST');
+        $this->assertEquals($crudPath, '/crud/renewlease');
+        $this->assertEquals($txPath, '/txs');
     }
 
     public function testRenewLeaseAll()
@@ -517,7 +594,18 @@ class ClientTest extends \PHPUnit\Framework\TestCase
             ['max_fee' => 4000000]
         );
 
+        $firstRequest = $container[0];
+        $secondRequest = $container[1];
+
+        $method = $firstRequest['request']->getMethod();
+        $crudPath = $firstRequest['request']->getUri()->getPath();
+
+        $txPath = $secondRequest['request']->getUri()->getPath();
+
         $this->assertEquals(\count($container), 2);
+        $this->assertEquals($method, 'POST');
+        $this->assertEquals($crudPath, '/crud/renewleaseall');
+        $this->assertEquals($txPath, '/txs');
     }
 
     public function testGetNShortestLease()
