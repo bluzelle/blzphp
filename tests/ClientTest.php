@@ -328,7 +328,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
 
         $expectedRes = [
             'result' => [
-                'count' => '10'
+                'count' => 10
             ] 
         ];
 
@@ -342,7 +342,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
 
         $res = $this->client->count();
 
-        $this->assertEquals($res, '10');
+        $this->assertEquals($res, 10);
     }
 
     public function testTxCount()

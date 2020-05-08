@@ -36,8 +36,7 @@ class Utils
 
     public static function convertLease($lease)
     {
-        if (isset($lease)) 
-            return '0';
+        if (isset($lease)) return 0;
 
         $seconds = 0;
 
@@ -46,7 +45,7 @@ class Utils
         $seconds += isset($lease['minutes']) ? ((int) $lease['minutes']) * 60 : 0;
         $seconds += isset($lease['seconds']) ? (int) $lease['seconds'] : 0;
 
-        return (string) $seconds;
+        return $seconds;
     }
 
     public static function jsonDecode($obj)

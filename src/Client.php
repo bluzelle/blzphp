@@ -39,41 +39,41 @@ class Client
         $this->setAccountDetails();
     }
 
-    public function create($key, $value, $gasInfo, $leaseInfo = null)
+    public function create(string $key, string $value, array $gasInfo, array $leaseInfo = null): void
     {
         $lease = Utils::convertLease($leaseInfo);
-
-        // TODO: validate block
+        $this->validateLease($lease);
 
         $this->sendTransaction(
             'POST',
             self::APP_SERVICE . '/create',
-            $this->buildParams([ 'Key' => $key, 'Value' => $value, 'Lease' => $lease ]),
+            $this->buildParams([ 'Key' => $key, 'Value' => $value, 'Lease' => (string) $lease ]),
             $gasInfo
         );
     }
 
-    public function update($key, $value, $gasInfo, $leaseInfo = null)
+    public function update(string $key, string $value, array $gasInfo, array $leaseInfo = null): void
     {
         $lease = Utils::convertLease($leaseInfo);
+        $this->validateLease($lease);
 
         $this->sendTransaction(
             'POST',
             self::APP_SERVICE . '/update',
-            $this->buildParams([ 'Key' => $key, 'Value' => $value, 'Lease' => $lease ]),
+            $this->buildParams([ 'Key' => $key, 'Value' => $value, 'Lease' => (string) $lease ]),
             $gasInfo
         );
     }
     
 
-    public function read($key, $prove = false)
+    public function read(string $key, $prove = false): string
     {
         $path = $prove ? 'pread' : 'read';
         $url = self::APP_SERVICE . "/" . $path . "/" . $this->uuid  . "/" . $key;
         return $this->query($url)['result']['value'];
     }
 
-    public function txRead($key, $gasInfo)
+    public function txRead(string $key, array $gasInfo): string
     {
         return $this->sendTransaction(
             'POST',
@@ -83,7 +83,7 @@ class Client
         )['value'];
     }
 
-    public function delete($key, $gasInfo)
+    public function delete(string $key, array $gasInfo): void
     {
         $this->sendTransaction(
             'DELETE',
@@ -93,13 +93,13 @@ class Client
         );
     }
 
-    public function has($key)
+    public function has(string $key): bool
     {
         $url = self::APP_SERVICE . '/has/' . $this->uuid . '/' . $key;
         return $this->query($url)['result']['has'];
     }
 
-    public function txHas($key, $gasInfo)
+    public function txHas(string $key, array $gasInfo): bool
     {
         return $this->sendTransaction(
             'POST',
@@ -109,13 +109,13 @@ class Client
         )['has'];
     }
 
-    public function keys()
+    public function keys(): array
     {
         $url = self::APP_SERVICE . '/keys/' . $this->uuid;
         return $this->query($url)['result']['keys'];
     }
 
-    public function txkeys($gasInfo)
+    public function txkeys(array $gasInfo): array
     {
         return $this->sendTransaction(
             'POST',
@@ -125,7 +125,7 @@ class Client
         )['keys'];
     }
 
-    public function rename($key, $newKey, $gasInfo)
+    public function rename(string $key, string $newKey, array $gasInfo): void
     {
         $this->sendTransaction(
             'POST',
@@ -135,13 +135,13 @@ class Client
         );
     }
 
-    public function count()
+    public function count(): int
     {
         $url = self::APP_SERVICE . '/count/' . $this->uuid;
         return $this->query($url)['result']['count'];
     }
 
-    public function txCount($gasInfo)
+    public function txCount(array $gasInfo): int
     {
         return $this->sendTransaction(
             'POST',
@@ -151,9 +151,9 @@ class Client
         )['count'];
     }
 
-    public function deleteAll($gasInfo)
+    public function deleteAll(array $gasInfo): void
     {
-        return $this->sendTransaction(
+        $this->sendTransaction(
             'DELETE',
             self::APP_SERVICE . '/deleteall',
             $this->buildParams([]),
@@ -161,13 +161,13 @@ class Client
         );
     }
 
-    public function keyValues()
+    public function keyValues(): array
     {
         $url = self::APP_SERVICE . '/keyvalues/' . $this->uuid;
         return $this->query($url)['result']['keyvalues'];
     }
 
-    public function txKeyValues($gasInfo)
+    public function txKeyValues(array $gasInfo): array
     {
         return $this->sendTransaction(
             'POST',
@@ -177,7 +177,7 @@ class Client
         )['keyvalues'];
     }
 
-    public function multiUpdate($keyValues, $gasInfo)
+    public function multiUpdate(array $keyValues, array $gasInfo): void
     {
         $this->sendTransaction(
             'POST',
@@ -187,14 +187,14 @@ class Client
         );
     }
 
-    public function getLease($key)
+    public function getLease(string $key): string
     {
         $url = self::APP_SERVICE . '/getlease/' . $this->uuid . '/' . $key;
         $lease = (int) $this->query($url)['result']['lease'];
-        return $lease * self::BLOCK_TIME_IN_SECONDS;
+        return (string) ($lease * self::BLOCK_TIME_IN_SECONDS);
     }
 
-    public function txGetLease($key, $gasInfo)
+    public function txGetLease(string $key, array $gasInfo): string
     {
         $lease = (int) $this->sendTransaction(
             'POST',
@@ -203,40 +203,42 @@ class Client
             $gasInfo
         )['lease'];
 
-        return $lease * self::BLOCK_TIME_IN_SECONDS;
+        return (string) ($lease * self::BLOCK_TIME_IN_SECONDS);
     }
 
-    public function renewLease($key, $leaseInfo, $gasInfo)
+    public function renewLease(string $key, array $leaseInfo, array $gasInfo): void
     {
         $lease = Utils::convertLease($leaseInfo);
+        $this->validateLease($lease);
 
         $this->sendTransaction(
             'POST',
             self::APP_SERVICE . '/renewlease',
-            $this->buildParams([ 'Key' => $key, 'Lease' => $lease ]),
+            $this->buildParams([ 'Key' => $key, 'Lease' => (string) $lease ]),
             $gasInfo
         );
     }
 
-    public function renewLeaseAll($leaseInfo, $gasInfo)
+    public function renewLeaseAll(array $leaseInfo, array $gasInfo): void
     {
         $lease = Utils::convertLease($leaseInfo);
+        $this->validateLease($lease);
 
         $this->sendTransaction(
             'POST',
             self::APP_SERVICE . '/renewleaseall',
-            $this->buildParams([ 'Lease' => $lease ]),
+            $this->buildParams([ 'Lease' => (string) $lease ]),
             $gasInfo
         );
     }
 
-    public function getNShortestLease($n)
+    public function getNShortestLease(int $n): array
     {
         $url = self::APP_SERVICE . '/getnshortestlease/' . $this->uuid . '/' . $n;
         return $this->query($url)['result']['keyleases'];
     }
 
-    public function txGetNShortestLease($n, $gasInfo)
+    public function txGetNShortestLease(int $n, array $gasInfo): array
     {
         return $this->sendTransaction(
             'POST',
@@ -246,13 +248,13 @@ class Client
         )['keyleases'];
     }
 
-    public function account()
+    public function account(): array
     {
         $url = 'auth/accounts/' . $this->address;
         return $this->query($url)['result']['value'];
     }
 
-    public function version()
+    public function version(): string
     {
         return $this->query('node_info')['application_version']['version'];
     }
@@ -276,8 +278,13 @@ class Client
 
         if ($this->address !== $retrievedAddress)
         {
-            throw new \Exception('Address verification failed');
+            throw new Exception\AddressValidationFailedException();
         }
+    }
+
+    private function validateLease(int $blocks)
+    {
+        if ($blocks < 0) throw new Exception\InvalidLeaseException();
     }
 
     private function request($method, $url, $data = [])
