@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bluzelle\Bluzelle;
-
-use \Elliptic\EC;
+namespace Bluzelle;
 
 class Client
 {

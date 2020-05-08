@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bluzelle\Bluzelle\Exception;
+namespace Bluzelle\Exception;
 
 class AddressValidationFailedException extends \Exception
 {

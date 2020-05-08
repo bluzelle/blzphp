@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bluzelle\Bluzelle;
+namespace Bluzelle;
 
 use \BitWasp\Bitcoin\Mnemonic\Bip39\Bip39SeedGenerator;
 use \BitWasp\Bitcoin\Mnemonic\MnemonicFactory;

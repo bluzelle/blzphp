@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bluzelle\Bluzelle;
+namespace Bluzelle;
 
 use \GuzzleHttp\Client as HttpClient;
 use \Elliptic\EC;
@@ -15,7 +15,7 @@ class Cosmos
     private $accountInfo;
     private $key;
 
-    public function __construct($address, $mnemoic, $endpoint, $chainId)
+    public function __construct(string $address, string $mnemoic, string $endpoint, string $chainId)
     {
         $this->address = $address;
         $this->endpoint = $endpoint;
@@ -28,12 +28,12 @@ class Cosmos
         $this->setAccountDetails();
     }
 
-    public function query($endpoint)
+    public function query(string $endpoint)
     {
         return $this->request('GET', $this->endpoint . '/' . $endpoint);
     }
 
-    public function sendTransaction($method, $endpoint, $params, $gasInfo)
+    public function sendTransaction(string $method, string $endpoint, array $params, array $gasInfo)
     {
         $url = $this->endpoint . '/' . $endpoint;
 

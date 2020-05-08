@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bluzelle\Test;
 
-use \Bluzelle\Bluzelle\Client;
+use \Bluzelle\Client;
 use \GuzzleHttp\Client as HttpClient;
 use \GuzzleHttp\Handler\MockHandler;
 use \GuzzleHttp\HandlerStack;
