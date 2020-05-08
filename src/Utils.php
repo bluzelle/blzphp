@@ -28,15 +28,18 @@ class Utils
     {
         $res = [];
 
-        for ($i = 0; $i<count($arr); $i++)
+        for ($i = 0; $i<count($arr); $i++) {
             $res[$i] = $arr[$i + 1];
+        }
 
         return $res;
     }
 
     public static function convertLease($lease)
     {
-        if (isset($lease)) return 0;
+        if (isset($lease)) {
+            return 0;
+        }
 
         $seconds = 0;
 
@@ -83,19 +86,24 @@ class Utils
         $randomStr = '';
         $chars = \str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
 
-        for ($i = 0; $i < 32; $i++)
+        for ($i = 0; $i < 32; $i++) {
             $randomStr .= $chars[array_rand($chars, 1)];
+        }
 
         return $randomStr;
     }
 
-    public static function ksortRecursive(&$array, $sort_flags = SORT_REGULAR) {
-        if (!is_array($array)) return false;
+    public static function ksortRecursive(&$array, $sort_flags = SORT_REGULAR)
+    {
+        if (!is_array($array)) {
+            return false;
+        }
         
         ksort($array, $sort_flags);
         
-        foreach ($array as &$arr)
+        foreach ($array as &$arr) {
             self::ksortRecursive($arr, $sort_flags);
+        }
         
         return true;
     }

@@ -32,7 +32,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
           'fee' => [
             'amount' => [],
             'gas' => '100000'
-        ],
+          ],
           'signatures' => null,
           'memo' => ''
         ]
@@ -128,7 +128,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $expectedRes = [
             'result' => [
                 'value' => 'value'
-            ] 
+            ]
         ];
 
         $mock = new MockHandler([
@@ -205,7 +205,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $expectedRes = [
             'result' => [
                 'has' => true
-            ] 
+            ]
         ];
 
         $mock = new MockHandler([
@@ -248,7 +248,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $expectedRes = [
             'result' => [
                 'keys' => $keys
-            ] 
+            ]
         ];
 
         $mock = new MockHandler([
@@ -329,7 +329,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $expectedRes = [
             'result' => [
                 'count' => 10
-            ] 
+            ]
         ];
 
         $mock = new MockHandler([
@@ -404,7 +404,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     {
         $kv = [
             'keyvalues' => [
-                [ 'key' => 'key1', 'value' => 'value1' ], 
+                [ 'key' => 'key1', 'value' => 'value1' ],
                 [ 'key' => 'key2', 'value' => 'value2' ]
             ]
         ];
@@ -430,7 +430,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     {
         $kv = [
             'keyvalues' => [
-                [ 'key' => 'key1', 'value' => 'value1' ], 
+                [ 'key' => 'key1', 'value' => 'value1' ],
                 [ 'key' => 'key2', 'value' => 'value2' ]
             ]
         ];
@@ -472,7 +472,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
 
         $this->client->multiUpdate(
             [
-                [ 'key' => 'key1', 'value' => 'value1' ], 
+                [ 'key' => 'key1', 'value' => 'value1' ],
                 [ 'key' => 'key2', 'value' => 'value2' ]
             ],
             ['max_fee' => 4000000]
@@ -554,7 +554,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
 
         $this->client->renewLease(
             'key',
-            [ 'days' => '2', 'hours' => '3', 'minutes' => '20', 'seconds' => '30' ], 
+            [ 'days' => '2', 'hours' => '3', 'minutes' => '20', 'seconds' => '30' ],
             ['max_fee' => 4000000]
         );
 
@@ -590,7 +590,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->client->setHttpClient($httpClient);
 
         $this->client->renewLeaseAll(
-            [ 'days' => '2', 'hours' => '3', 'minutes' => '20', 'seconds' => '30' ], 
+            [ 'days' => '2', 'hours' => '3', 'minutes' => '20', 'seconds' => '30' ],
             ['max_fee' => 4000000]
         );
 

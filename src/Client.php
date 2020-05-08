@@ -29,7 +29,7 @@ class Client
         $this->endpoint = isset($endpoint) ? $endpoint : 'http://localhost:1317';
         $this->uuid = isset($uuid) ? $uuid : $this->address;
 
-        $this->cosmos = new Cosmos($address, $mnemonic, $this->endpoint, $this->chainId); 
+        $this->cosmos = new Cosmos($address, $mnemonic, $this->endpoint, $this->chainId);
     }
 
     public function create(string $key, string $value, array $gasInfo, array $leaseInfo = null): void
@@ -259,7 +259,9 @@ class Client
 
     private function validateLease(int $blocks)
     {
-        if ($blocks < 0) throw new Exception\InvalidLeaseException();
+        if ($blocks < 0) {
+            throw new Exception\InvalidLeaseException();
+        }
     }
 
 

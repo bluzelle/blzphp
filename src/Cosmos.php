@@ -37,7 +37,7 @@ class Cosmos
     {
         $url = $this->endpoint . '/' . $endpoint;
 
-        $txn = $this->request($method, $url, [ 
+        $txn = $this->request($method, $url, [
             'json' => $params
         ])['value'];
 
@@ -93,8 +93,9 @@ class Cosmos
     {
         $retrievedAddress = Utils::getAddressFromPublicKey($this->getPublicKey());
 
-        if ($this->address !== $retrievedAddress)
+        if ($this->address !== $retrievedAddress) {
             throw new Exception\AddressValidationFailedException();
+        }
     }
 
     private function signTransaction($txn)
@@ -175,9 +176,9 @@ class Cosmos
         if ($maxGasParam) {
             $txn['fee']['amount'] = [[
                 'denom' => 'ubnt',
-                'amount' => (string) $maxGasParam 
+                'amount' => (string) $maxGasParam
             ]];
-        } else if ($maxPriceParam) {
+        } elseif ($maxPriceParam) {
             $txn['fee']['amount'] = [[
                 'denom' => 'ubnt',
                 'amount' => (string) ($gas * $maxPriceParam)
