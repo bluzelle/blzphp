@@ -14,7 +14,7 @@ class Client
     private $address;
     private $mnemonic;
     private $endpoint;
-    private $chainId = 'bluzelle';
+    private $chainId;
     private $uuid;
     private $gasInfo;
     private $accountInfo;
@@ -24,13 +24,14 @@ class Client
     /**
      * Create a new Bluzelle Client instance
      */
-    public function __construct($address, $mnemonic, $endpoint, $chainId, $uuid)
+    public function __construct(string $address, string $mnemonic, $endpoint = null, $chainId = 'bluzelle', $uuid = null)
     {
         $this->address = $address;
         $this->mnemonic = $mnemonic;
-        $this->endpoint = $endpoint;
         $this->chainId = $chainId;
-        $this->uuid = $uuid;
+        
+        $this->endpoint = isset($endpoint) ? $endpoint : 'http://localhost:1317';
+        $this->uuid = isset($uuid) ? $uuid : $this->address;
 
         $this->httpClient = new \GuzzleHttp\Client();
         $this->key = Utils::getECKey($this->mnemonic);
