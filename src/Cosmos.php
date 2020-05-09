@@ -15,6 +15,9 @@ class Cosmos
     private $accountInfo;
     private $key;
 
+    private const MAX_RETRIES = 10;
+    private const RETRY_INTERVAL = 1;
+
     public function __construct(string $address, string $mnemoic, string $endpoint, string $chainId)
     {
         $this->address = $address;
@@ -77,14 +80,50 @@ class Cosmos
         ]);
 
         if (isset($res['code'])) {
-            throw new \Exception($res['raw_log']);
+            $rawLog = $res['raw_log'];
+
+            if (strpos($rawLog, 'signature verification failed') == true) {
+                $this->updateAccountSequence($method, $endpoint, $txn, self::MAX_RETRIES);
+            } else {
+                throw new \Exception($rawLog);
+            }
         } else {
             $this->accountInfo['sequence']++;
-            
+
             if (isset($res['data'])) {
                 return Utils::jsonDecode(Utils::decodeHex($res['data']));
             }
         }
+    }
+
+    private function updateAccountSequence($method, $endpoint, $txn, $retries)
+    {
+        echo 'retries' . $retries;
+        if ($retries) {
+            sleep(self::RETRY_INTERVAL);
+
+            $changed = $this->accountSequenceChanged();
+
+            if ($changed) {
+                $this->broadcastTrasnaction($method, $endpoint, $txn);
+            } else {
+                $this->updateAccountSequence($method, $endpoint, $txn, $retries - 1);
+            }
+        } else {
+            throw new \Exception('Invalid chain id');
+        }
+    }
+
+    private function accountSequenceChanged()
+    {
+        $accountInfo = $this->account();
+
+        if (((int) $accountInfo['sequence']) !== ((int) $this->accountInfo['sequence'])) {
+            $this->accountInfo['sequence'] = $accountInfo['sequence'];
+            return true;
+        }
+
+        return false;
     }
 
     private function request($method, $url, $data = []): array
