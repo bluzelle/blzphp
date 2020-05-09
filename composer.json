@@ -1,16 +1,16 @@
 {
     "name": "bluzelle/client",
     "type": "library",
-    "description": ":package_description",
+    "description": "Php library that can be used to access the Bluzelle database service.",
     "keywords": [
-        ":vendor",
-        ":package_name"
+        "bluzelle",
+        "blzphp"
     ],
-    "homepage": "https://github.com/:vendor/:package_name",
+    "homepage": "https://github.com/bluzelle/blzphp",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
+            "name": "Mulenga Bowa",
             "email": "mulengabowa53@gmail.com",
             "homepage": "https://github.com/mul53/bluzelle-php",
             "role": "Developer"
