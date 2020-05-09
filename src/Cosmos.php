@@ -72,7 +72,7 @@ class Cosmos
     {
         $url = $this->endpoint . '/' .$endpoint;
 
-        $res = $this->request($method, $url, [
+        $res = $this->request('POST', $url, [
             'json' => [
                 'mode' => 'block',
                 'tx' => $txn

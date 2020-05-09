@@ -32,10 +32,9 @@ $client->txRead('kv', $gasInfo);
 $client->update('kv', 'new_value', $gasInfo);
 
 $client->txRead('kv', $gasInfo);
-echo var_dump($val);
 # new_value
 
 $client->txKeys($gasInfo);
 # ['key']
 
-$client->delete('kv');
+$client->delete('kv', $gasInfo);
