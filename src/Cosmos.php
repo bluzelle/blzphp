@@ -85,7 +85,7 @@ class Cosmos
             if (strpos($rawLog, 'signature verification failed') == true) {
                 $this->updateAccountSequence($method, $endpoint, $txn, self::MAX_RETRIES);
             } else {
-                throw new \Exception($rawLog);
+                throw new \Exception($this->extractErrorMessage($rawLog));
             }
         } else {
             $this->accountInfo['sequence']++;
@@ -98,7 +98,6 @@ class Cosmos
 
     private function updateAccountSequence($method, $endpoint, $txn, $retries)
     {
-        echo 'retries' . $retries;
         if ($retries) {
             sleep(self::RETRY_INTERVAL);
 
@@ -229,5 +228,25 @@ class Cosmos
         }
 
         return $txn;
+    }
+
+    private function extractErrorMessage(string $msg): string {
+        $offset1 = strpos($msg, ': ');
+
+        if ($offset1 == false) {
+            return $msg;
+        }
+
+        $prefix = Utils::substring($msg, 0, $offset1);
+
+        switch ($prefix) {
+            case 'insufficient fee':
+                return Utils::substring($msg, $offset1 + 2);
+            default:
+                break;
+        }
+
+        $offset2 = strpos($msg, ':', $offset1 + 1);
+        return Utils::substring($msg, $offset1 + 2, $offset2);
     }
 }

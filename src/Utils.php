@@ -127,4 +127,10 @@ class Utils
         $hdFactory = new HierarchicalKeyFactory();
         return $hdFactory->fromEntropy($seed);
     }
+
+
+    public static function substring($str, $start, $end = null)
+    {
+        return isset($end) ? substr($str, $start, $end - $start) : substr($str, $start);
+    }
 }
