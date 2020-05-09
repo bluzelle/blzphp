@@ -79,7 +79,11 @@ class Cosmos
         if (isset($res['code'])) {
             throw new \Exception($res['raw_log']);
         } else {
-            return Utils::jsonDecode(Utils::decodeHex($res['data']));
+            $this->accountInfo['sequence']++;
+            
+            if (isset($res['data'])) {
+                return Utils::jsonDecode(Utils::decodeHex($res['data']));
+            }
         }
     }
 
