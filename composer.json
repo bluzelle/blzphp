@@ -1,5 +1,5 @@
 {
-    "name": "bluzelle/client",
+    "name": "bluzelle/blzphp",
     "type": "library",
     "description": "Php library that can be used to access the Bluzelle database service.",
     "keywords": [
