@@ -395,7 +395,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $txPath = $secondRequest['request']->getUri()->getPath();
 
         $this->assertEquals(\count($container), 2);
-        $this->assertEquals($method, 'DELETE');
+        $this->assertEquals($method, 'POST');
         $this->assertEquals($crudPath, '/crud/deleteall');
         $this->assertEquals($txPath, '/txs');
     }

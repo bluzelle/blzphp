@@ -147,7 +147,7 @@ class Client
     public function deleteAll(array $gasInfo): void
     {
         $this->cosmos->sendTransaction(
-            'DELETE',
+            'POST',
             self::APP_SERVICE . '/deleteall',
             $this->buildParams([]),
             $gasInfo
