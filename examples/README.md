@@ -8,7 +8,36 @@ Install the required dependencies
 - Install [PHP](https://www.php.net/manual/en/install.php)
 - Install [composer](https://getcomposer.org/download/)
 
+Install dependencies required by packages
+
+Add your php version in [php-verison]
+- Install gmp run `sudo apt-get install php[php-verison]-gmp`
+
 After installing the dependencies
-- Clone the repo
-- Run `composer install` in directory root
-- Run `php examples\index.php` to run example file
+- **Only for package testing** Set option `minimum-stability` in your `composer.json` to `dev` 
+- Run `composer require mul53/blzphp` in directory root
+
+Example index.php
+```php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Bluzelle\Client;
+
+
+$client = new Client(
+    'bluzelle1upsfjftremwgxz3gfy0wf3xgvwpymqx754ssu9',
+    'around buzz diagram captain obtain detail salon mango muffin brother morning jeans display attend knife carry green dwarf vendor hungry fan route pumpkin car',
+    'http://testnet.public.bluzelle.com:1317',
+    'bluzelle',
+    '20fc19d4-7c9d-4b5c-9578-8cedd756e0ea'
+);
+
+$gasInfo = ['max_fee' => 4000000];
+
+echo $client->version();
+```
+
+- Add the script above in a `index.php` file
+- Run `php index.php`
