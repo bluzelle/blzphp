@@ -131,12 +131,12 @@ class Client
     public function count(): int
     {
         $url = self::APP_SERVICE . '/count/' . $this->uuid;
-        return $this->cosmos->query($url)['result']['count'];
+        return (int) $this->cosmos->query($url)['result']['count'];
     }
 
     public function txCount(array $gasInfo): int
     {
-        return $this->cosmos->sendTransaction(
+        return (int) $this->cosmos->sendTransaction(
             'POST',
             self::APP_SERVICE . '/count',
             $this->buildParams([]),
