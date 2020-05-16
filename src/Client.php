@@ -180,14 +180,14 @@ class Client
         );
     }
 
-    public function getLease(string $key): string
+    public function getLease(string $key): int
     {
         $url = self::APP_SERVICE . '/getlease/' . $this->uuid . '/' . $key;
         $lease = (int) $this->cosmos->query($url)['result']['lease'];
-        return (string) ($lease * self::BLOCK_TIME_IN_SECONDS);
+        return $lease * self::BLOCK_TIME_IN_SECONDS;
     }
 
-    public function txGetLease(string $key, array $gasInfo): string
+    public function txGetLease(string $key, array $gasInfo): int
     {
         $lease = (int) $this->cosmos->sendTransaction(
             'POST',
@@ -196,7 +196,7 @@ class Client
             $gasInfo
         )['lease'];
 
-        return (string) ($lease * self::BLOCK_TIME_IN_SECONDS);
+        return $lease * self::BLOCK_TIME_IN_SECONDS;
     }
 
     public function renewLease(string $key, array $leaseInfo, array $gasInfo): void
@@ -228,17 +228,31 @@ class Client
     public function getNShortestLeases(int $n): array
     {
         $url = self::APP_SERVICE . '/getnshortestleases/' . $this->uuid . '/' . $n;
-        return $this->cosmos->query($url)['result']['keyleases'];
+        $leases = $this->cosmos->query($url)['result']['keyleases'];
+        
+        return array_map(function ($elem) {
+            return [ 
+                'key' => $elem['key'], 
+                'lease' => $elem['lease'] * self::BLOCK_TIME_IN_SECONDS 
+            ];
+        }, $leases);
     }
 
     public function txGetNShortestLeases(int $n, array $gasInfo): array
     {
-        return $this->cosmos->sendTransaction(
+        $leases = $this->cosmos->sendTransaction(
             'POST',
             self::APP_SERVICE . '/getnshortestleases',
             $this->buildParams([ 'N' => (string) $n ]),
             $gasInfo
         )['keyleases'];
+
+        return array_map(function ($elem) {
+            return [ 
+                'key' => $elem['key'], 
+                'lease' => $elem['lease'] * self::BLOCK_TIME_IN_SECONDS 
+            ];
+        }, $leases);
     }
 
     public function account(): array

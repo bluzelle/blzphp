@@ -1,8 +1,13 @@
 <?php
 
+require __DIR__ . '/../vendor/autoload.php';
+
 use Bluzelle\Client;
 
-require __DIR__ . '/../vendor/autoload.php';
+function printN($str = '')
+{
+	echo $str . PHP_EOL;
+}
 
 $client = new Client(
     'bluzelle1upsfjftremwgxz3gfy0wf3xgvwpymqx754ssu9',
@@ -14,27 +19,111 @@ $client = new Client(
 
 $gasInfo = ['max_fee' => 4000000];
 
-$client->version();
-// 0.0.0-60-g1b32db7
+printN('#version start');
+printN($client->version());
+printN();
 
-$client->account();
-# {"address"=>"bluzelle1upsfjftremwgxz3gfy0wf3xgvwpymqx754ssu9",
-# "coins"=>[{"denom"=>"ubnt", "amount"=>"1199722793983680"}],
-# "public_key"=>"bluzellepub1addwnpepqwnm94uc0yy338w7l3ghd8en0kg6nvds3h6l8n0wz355nhz35prtufpjsq2", "account_number"=>9, "sequence"=>302}
+printN('#account start');
+printN(json_encode($client->account()));
+printN();
 
+printN('#deleteAll start');
 $client->deleteAll($gasInfo);
+printN('#deleteAll done');
+printN();
 
-$client->create('kv', 'value', $gasInfo);
+printN("#create start: create key: 'key', value: 'v' ");
+$client->create('key', 'v', $gasInfo);
+printN('#create end');
+printN();
 
-$client->txRead('kv', $gasInfo);
-# value
+printN('#read start');
+printN($client->read('key'));
+printN();
 
-$client->update('kv', 'new_value', $gasInfo);
+printN('#txRead start');
+printN($client->txRead('key', $gasInfo));
+printN();
 
-$client->txRead('kv', $gasInfo);
-# new_value
+printN("#update start: update key: 'key', value: 'v2'");
+$client->update('key', 'v2', $gasInfo);
+printN('#update end');
+printN();
 
-$client->txKeys($gasInfo);
-# ['key']
+printN('#read: read new value');
+printN($client->read('key'));
+printN();
 
-$client->delete('kv', $gasInfo);
+printN("#has has key: 'key'");
+printN(json_encode($client->has('key')));
+printN();
+
+printN("#txHas has key: 'key'");
+printN(json_encode($client->txHas('key', $gasInfo)));
+printN();
+
+printN('#keys start');
+printN(json_encode($client->keys()));
+printN();
+
+printN('#txKeys start');
+printN(json_encode($client->txKeys($gasInfo)));
+printN();
+
+printN("#rename: rename key: 'key', new_key: 'new_key'");
+$client->rename('key', 'new_key', $gasInfo);
+printN('#rename end');
+printN();
+
+printN("#read: read from new key name");
+printN($client->read('new_key'));
+printN();
+
+printN('#count start');
+printN(json_encode($client->count()));
+printN();
+
+printN('#txCount start');
+printN(json_encode($client->txCount($gasInfo)));
+printN();
+
+printN('#keyValues start');
+printN(json_encode($client->keyValues()));
+printN();
+
+printN('#txKeyValues start');
+printN(json_encode($client->txKeyValues($gasInfo)));
+printN();
+
+printN('#getLease start');
+printN($client->getLease('new_key'));
+printN();
+
+printN('#txGetLease start');
+printN($client->txGetLease('new_key', $gasInfo));
+printN();
+
+printN('#renewLease');
+$client->renewLease('new_key', [ 'days' => 1 ], $gasInfo);
+
+printN('#getLease');
+printN($client->getLease('new_key'));
+
+printN('#renewLeaseAll');
+$client->renewLeaseAll([ 'days' => 2 ], $gasInfo);
+
+printN('#getLease');
+printN("key: new_key, lease: " . $client->getLease('new_key'));
+
+printN('#getNShortestLeases');
+printN(json_encode($client->getNShortestLeases(5)));
+
+printN('#txGetNShortestLeases'); 
+printN(json_encode($client->txGetNShortestLeases(5, $gasInfo)));
+
+$client->create('key2', 'value2', $gasInfo);
+
+printN('#multiupdate');
+$client->multiupdate([ ['key' => 'new_key', 'value' => 'v1'], [ 'key' => 'key2', 'value' => 'v2' ] ], $gasInfo);
+
+printN(json_encode($client->keyValues()));
