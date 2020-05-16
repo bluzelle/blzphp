@@ -97,7 +97,7 @@ class Client
         return $this->cosmos->sendTransaction(
             'POST',
             self::APP_SERVICE . '/has',
-            $this->buildParams([ 'key' => $key ]),
+            $this->buildParams([ 'Key' => $key ]),
             $gasInfo
         )['has'];
     }
