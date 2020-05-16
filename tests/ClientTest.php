@@ -608,7 +608,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($txPath, '/txs');
     }
 
-    public function testGetNShortestLease()
+    public function testGetNShortestLeases()
     {
         $expectedRes = [
             'result' => [
@@ -633,12 +633,12 @@ class ClientTest extends \PHPUnit\Framework\TestCase
 
         $this->client->setHttpClient($httpClient);
 
-        $res = $this->client->getNShortestLease(10);
+        $res = $this->client->getNShortestLeases(10);
 
         $this->assertEquals($res, $expectedRes['result']['keyleases']);
     }
 
-    public function testTxGetNShortestLease()
+    public function testTxGetNShortestLeases()
     {
         $expectedRes = [
             'data' => \bin2hex(\json_encode([
@@ -664,7 +664,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         
         $this->client->setHttpClient($httpClient);
 
-        $res = $this->client->txGetNShortestLease(10, ['max_fee' => 400000]);
+        $res = $this->client->txGetNShortestLeases(10, ['max_fee' => 400000]);
 
         $this->assertEquals($res, \json_decode(\hex2bin($expectedRes['data']), true)['keyleases']);
     }

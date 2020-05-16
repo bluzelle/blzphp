@@ -225,17 +225,17 @@ class Client
         );
     }
 
-    public function getNShortestLease(int $n): array
+    public function getNShortestLeases(int $n): array
     {
-        $url = self::APP_SERVICE . '/getnshortestlease/' . $this->uuid . '/' . $n;
+        $url = self::APP_SERVICE . '/getnshortestleases/' . $this->uuid . '/' . $n;
         return $this->cosmos->query($url)['result']['keyleases'];
     }
 
-    public function txGetNShortestLease(int $n, array $gasInfo): array
+    public function txGetNShortestLeases(int $n, array $gasInfo): array
     {
         return $this->cosmos->sendTransaction(
             'POST',
-            self::APP_SERVICE . '/getnshortestlease',
+            self::APP_SERVICE . '/getnshortestleases',
             $this->buildParams([ 'N' => (string) $n ]),
             $gasInfo
         )['keyleases'];
