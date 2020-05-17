@@ -41,3 +41,5 @@ echo $client->version();
 
 - Add the script above in a `index.php` file
 - Run `php index.php`
+
+To run more tests copy the script in `examples/index.php` and run `php index.php`
