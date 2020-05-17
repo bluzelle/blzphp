@@ -635,7 +635,16 @@ class ClientTest extends \PHPUnit\Framework\TestCase
 
         $res = $this->client->getNShortestLeases(10);
 
-        $this->assertEquals($res, $expectedRes['result']['keyleases']);
+        $this->assertEquals($res, [
+            [
+                'key' => 'key1',
+                'lease' => 500
+            ],
+            [
+                'key' => 'key2',
+                'lease' => 1000
+            ]
+        ]);
     }
 
     public function testTxGetNShortestLeases()
@@ -666,7 +675,16 @@ class ClientTest extends \PHPUnit\Framework\TestCase
 
         $res = $this->client->txGetNShortestLeases(10, ['max_fee' => 400000]);
 
-        $this->assertEquals($res, \json_decode(\hex2bin($expectedRes['data']), true)['keyleases']);
+        $this->assertEquals($res, [
+            [
+                'key' => 'key1',
+                'lease' => 500
+            ],
+            [
+                'key' => 'key2',
+                'lease' => 1000
+            ]
+        ]);
     }
 
     public function testShouldReturnAccountDetails()
