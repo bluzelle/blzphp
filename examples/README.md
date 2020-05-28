@@ -1,23 +1,20 @@
 # Example
 This is an example of how to use the [bluzelle/blzphp](https://github.com/mul53/blzphp) library
 
-## Installation
+## Installation(ubuntu 18.04)
 
-Install the required dependencies
-- Install [Git](https://gist.github.com/derhuerst/1b15ff4652a867391f03)
-- Install [PHP](https://www.php.net/manual/en/install.php)
-- Install [composer](https://getcomposer.org/download/)
+### Install dependencies
+1. `sudo apt-get update`
+2. `sudo apt-get install php`
+3. `sudo apt-get install composer`
+4. `sudo apt-get install php7.2-gmp`
 
-Install dependencies required by packages
+### Setup project
+1. Create a folder for your project
+2. Init the proejct with composer `composer init`
+3. Install package `composer require mul53/blzphp`
+4. Create a file called `index.php` and include the code below
 
-Add your php version in [php-verison]
-- Install gmp run `sudo apt-get install php[php-verison]-gmp`
-
-After installing the dependencies
-- **Only for package testing** Set option `minimum-stability` in your `composer.json` to `dev` 
-- Run `composer require mul53/blzphp` in directory root
-
-Example index.php
 ```php
 <?php
 
@@ -37,9 +34,9 @@ $client = new Client(
 $gasInfo = ['max_fee' => 4000000];
 
 echo $client->version();
+
+?>
 ```
+5. Run the file `php index.php`
 
-- Add the script above in a `index.php` file
-- Run `php index.php`
-
-To run more tests copy the script in `examples/index.php` and run `php index.php`
+To run more tests copy the script in `examples/index.php` to your file and run `php index.php`
