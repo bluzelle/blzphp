@@ -46,6 +46,18 @@ class Cosmos
 
         $txn = $this->updateGas($txn, $gasInfo);
 
+        return $this->broadcastTrasnaction($method, 'txs', $txn);
+    }
+
+    public function setHttpClient($httpClient)
+    {
+        $this->httpClient = $httpClient;
+    }
+
+    private function broadcastTrasnaction($method, $endpoint, $txn)
+    {
+        $url = $this->endpoint . '/' .$endpoint;
+
         $txn['memo'] = Utils::makeRandomString();
 
         Utils::ksortRecursive($txn);
@@ -59,18 +71,6 @@ class Cosmos
             'sequence' => (string) $this->accountInfo['sequence'],
             'signature' => $this->signTransaction($txn)
         ]];
-
-        return $this->broadcastTrasnaction($method, 'txs', $txn);
-    }
-
-    public function setHttpClient($httpClient)
-    {
-        $this->httpClient = $httpClient;
-    }
-
-    private function broadcastTrasnaction($method, $endpoint, $txn)
-    {
-        $url = $this->endpoint . '/' .$endpoint;
 
         $res = $this->request('POST', $url, [
             'json' => [
