@@ -211,7 +211,7 @@ class Cosmos
         }
 
         
-        if ($gas > $maxGasParam) {
+        if (is_null($maxGasParam) && $gas > $maxGasParam) {
             $txn['fee']['gas'] = $maxGasParam;
         }
 
