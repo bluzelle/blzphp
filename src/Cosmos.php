@@ -85,7 +85,6 @@ class Cosmos
             if (strpos($rawLog, 'signature verification failed') == true) {
                 $this->updateAccountSequence($method, $endpoint, $txn, self::MAX_RETRIES);
             } else {
-                echo $rawLog;
                 throw new \Exception($this->extractErrorMessage($rawLog));
             }
         } else {
