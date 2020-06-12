@@ -152,7 +152,7 @@ class Cosmos
         ];
 
         return Utils::base64Encode(
-            $this->generateSignature(Utils::jsonEncode($data))
+            $this->generateSignature(Utils::sanitizeString(Utils::jsonEncode($data)))
         );
     }
 

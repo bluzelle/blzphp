@@ -133,4 +133,14 @@ class Utils
     {
         return isset($end) ? substr($str, $start, $end - $start) : substr($str, $start);
     }
+
+    public static function sanitizeString($str) {
+        return \preg_replace_callback(
+            '/([&<>])/', 
+            function ($token) {
+                return '\\u00' . \bin2hex($token[0]);
+            },
+            $str
+        );
+    }
 }
