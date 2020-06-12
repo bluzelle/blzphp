@@ -198,34 +198,28 @@ class Cosmos
 
     private function updateGas(array $txn, array $gasInfo): array
     {
+        $maxGas = isset($gasInfo['max_gas']) ? $gasInfo['max_gas'] : null;
+        $maxFee = isset($gasInfo['max_fee']) ? $gasInfo['max_fee'] : null;
+        $gasPrice = isset($gasInfo['gas_price']) ? $gasInfo['gas_price'] : null;
         $gas = (int) $txn['fee']['gas'];
-        $maxGasParam = null;
-        $maxPriceParam = null;
 
-        if (isset($gasInfo['max_fee'])) {
-            $maxGasParam = (int) $gasInfo['max_fee'];
+        if (isset($maxGas) && $maxGas != 0 && $gas > $maxGas) {
+            $gas = $maxGas;
         }
 
-        if (isset($gasInfo['gas_price'])) {
-            $maxPriceParam = (int) $gasInfo['gas_price'];
-        }
-
-        
-        if (!is_null($maxGasParam) && $gas > $maxGasParam) {
-            $txn['fee']['gas'] = $maxGasParam;
-        }
-
-        if ($maxGasParam) {
+        if (!is_null($maxFee) && $maxFee != 0) {
             $txn['fee']['amount'] = [[
                 'denom' => 'ubnt',
-                'amount' => (string) $maxGasParam
+                'amount' => (string) $maxFee
             ]];
-        } elseif ($maxPriceParam) {
+        } elseif (!is_null($gasPrice) && $gasPrice != 0) {
             $txn['fee']['amount'] = [[
                 'denom' => 'ubnt',
-                'amount' => (string) ($gas * $maxPriceParam)
+                'amount' => (string) ($gas * $gasPrice)
             ]];
         }
+
+        $txn['fee']['gas'] = (string) $gas;
 
         return $txn;
     }
