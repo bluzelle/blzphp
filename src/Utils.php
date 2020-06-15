@@ -11,6 +11,8 @@ use \BitWasp\Bech32;
 
 class Utils
 {
+    public const BLOCK_TIME_IN_SECONDS = 5;
+    
     public static function getAddressFromPublicKey($publicKey)
     {
         $hexKey = self::decodeHex($publicKey);
@@ -37,10 +39,6 @@ class Utils
 
     public static function convertLease($lease)
     {
-        if (isset($lease)) {
-            return 0;
-        }
-
         $seconds = 0;
 
         $seconds += isset($lease['days']) ? ((int) $lease['days']) * 24 * 60 * 60 : 0;
@@ -48,7 +46,7 @@ class Utils
         $seconds += isset($lease['minutes']) ? ((int) $lease['minutes']) * 60 : 0;
         $seconds += isset($lease['seconds']) ? (int) $lease['seconds'] : 0;
 
-        return $seconds;
+        return $seconds / self::BLOCK_TIME_IN_SECONDS;
     }
 
     public static function jsonDecode($obj)
