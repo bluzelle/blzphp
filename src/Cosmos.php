@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Bluzelle;
 
 use \GuzzleHttp\Client as HttpClient;
+use \GuzzleHttp\Exception\ClientException;
+use \GuzzleHttp\Psr7;
 use \Elliptic\EC;
 
 class Cosmos
@@ -127,8 +129,12 @@ class Cosmos
 
     private function request($method, $url, $data = []): array
     {
-        $res = $this->httpClient->request($method, $url, $data);
-        return Utils::jsonDecode($res->getBody()->getContents());
+        try {
+            $res = $this->httpClient->request($method, $url, $data);
+            return Utils::jsonDecode($res->getBody()->getContents());
+        } catch (ClientException $e) {
+            throw new \Exception($e->getResponse()->getBody()->getContents());
+        }
     }
 
     private function validateAddress()
