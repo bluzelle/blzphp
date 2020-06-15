@@ -32,10 +32,22 @@ class Client
         $this->cosmos = new Cosmos($address, $mnemonic, $this->endpoint, $this->chainId);
     }
 
-    public function create(string $key, string $value, array $gasInfo, array $leaseInfo = null): void
+    public function create($key, $value, array $gasInfo, array $leaseInfo = null): void
     {
+        if (!\is_string($key)) {
+            throw new \Exception('Key must be a string');
+        }
+        
+        if (!\is_string($value)) {
+            throw new \Exception('Value must be a string');
+        }
+        
+        if (empty($key)) {
+            throw new \Exception('Key cannot be empty');
+        }
+        
         if (\strpos($key, '/') == true) {
-            throw new \Exception('ArgumentError: key should not contain a slash');
+            throw new \Exception('Key cannot contain a slash');
         }
         
         $lease = Utils::convertLease($leaseInfo);
@@ -203,7 +215,7 @@ class Client
         return $lease * self::BLOCK_TIME_IN_SECONDS;
     }
 
-    public function renewLease(string $key, array $leaseInfo, array $gasInfo): void
+    public function renewLease(string $key, array $gasInfo, array $leaseInfo = null): void
     {
         $lease = Utils::convertLease($leaseInfo);
         $this->validateLease($lease);
@@ -216,7 +228,7 @@ class Client
         );
     }
 
-    public function renewLeaseAll(array $leaseInfo, array $gasInfo): void
+    public function renewLeaseAll(array $gasInfo, array $leaseInfo = null): void
     {
         $lease = Utils::convertLease($leaseInfo);
         $this->validateLease($lease);
