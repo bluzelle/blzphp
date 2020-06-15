@@ -78,7 +78,7 @@ class Client
     public function read(string $key, $prove = false): string
     {
         $path = $prove ? 'pread' : 'read';
-        $url = self::APP_SERVICE . "/" . $path . "/" . $this->uuid  . "/" . $key;
+        $url = self::APP_SERVICE . "/" . $path . "/" . $this->uuid  . "/" . \rawurlencode($key);
         return $this->cosmos->query($url)['result']['value'];
     }
 
