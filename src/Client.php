@@ -34,6 +34,10 @@ class Client
 
     public function create(string $key, string $value, array $gasInfo, array $leaseInfo = null): void
     {
+        if (\strpos($key, '/') == true) {
+            throw new \Exception('ArgumentError: key should not contain a slash');
+        }
+        
         $lease = Utils::convertLease($leaseInfo);
         $this->validateLease($lease);
 
