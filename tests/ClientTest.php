@@ -44,7 +44,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
             'bluzelle1upsfjftremwgxz3gfy0wf3xgvwpymqx754ssu9',
             'around buzz diagram captain obtain detail salon mango muffin brother morning jeans display attend knife carry green dwarf vendor hungry fan route pumpkin car',
             'http://testnet.public.bluzelle.com:1317',
-            'bluzelle',
+            'bluzelleTestPublic-1',
             '20fc19d4-7c9d-4b5c-9578-8cedd756e0ea'
         );
     }
