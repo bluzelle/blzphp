@@ -36,7 +36,7 @@ api = new Client(
     'volcano arrest ceiling physical concert sunset absent hungry tobacco canal census era pretty car code crunch inside behind afraid express giraffe reflect stadium luxury',
     "http://localhost:1317",
     "20fc19d4-7c9d-4b5c-9578-8cedd756e0ea",
-    "bluzelle"
+    "bluzelleTestPublic-1"
 );
 ```
 
