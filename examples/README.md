@@ -9,6 +9,7 @@ This is an example of how to use the [bluzelle/blzphp](https://github.com/mul53/
 3. `sudo apt-get install composer`
 4. `sudo apt-get install zip unzip php7.2-zip`
 5. `sudo apt-get install php7.2-gmp`
+6. `sudo apt-get install php7.2-mbstring`
 
 ### Setup project
 1. Create a folder for your project
