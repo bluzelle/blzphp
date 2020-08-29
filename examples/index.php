@@ -104,13 +104,13 @@ printN($client->txGetLease('new_key', $gasInfo));
 printN();
 
 printN('#renewLease');
-$client->renewLease('new_key', [ 'days' => 1 ], $gasInfo);
+$client->renewLease('new_key', $gasInfo, [ 'days' => 1 ]);
 
 printN('#getLease');
 printN($client->getLease('new_key'));
 
 printN('#renewLeaseAll');
-$client->renewLeaseAll([ 'days' => 2 ], $gasInfo);
+$client->renewLeaseAll($gasInfo, [ 'days' => 2 ]);
 
 printN('#getLease');
 printN("key: new_key, lease: " . $client->getLease('new_key'));
